@@ -3,6 +3,8 @@
 
 This package contains a DNS provider module for [Caddy](https://github.com/caddyserver/caddy). It can be used to manage DNS records with [Mail-In-A-Box](https://mailinabox.email/).
 
+**NOTE:** This module only supports the one zone that the admin custom dns api is hosted on.
+
 ## Caddy Mail-In-A-Box
 
 ```
