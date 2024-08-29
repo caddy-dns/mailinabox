@@ -23,8 +23,8 @@ To use this module for the ACME DNS challenge, [configure the ACME issuer in you
 			"provider": {
 				"name": "mailinabox",
 				"api_url": "https://[your main-in-a-box domain name]/admin/dns/custom"
-                "email_address": "{$MAIB_EMAIL}"
-                "password": "{$MAIB_PASS}"
+                "email_address": "{$MIAB_EMAIL}"
+                "password": "{$MIAB_PASS}"
 			}
 		}
 	}
