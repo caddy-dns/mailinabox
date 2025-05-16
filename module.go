@@ -26,6 +26,7 @@ func (p *Provider) Provision(ctx caddy.Context) error {
 	p.Provider.APIURL = caddy.NewReplacer().ReplaceAll(p.Provider.APIURL, "")
 	p.Provider.EmailAddress = caddy.NewReplacer().ReplaceAll(p.Provider.EmailAddress, "")
 	p.Provider.Password = caddy.NewReplacer().ReplaceAll(p.Provider.Password, "")
+	p.Provider.TOTPSecret = caddy.NewReplacer().ReplaceAll(p.Provider.TOTPSecret, "")
 	return nil
 }
 
@@ -35,6 +36,7 @@ func (p *Provider) Provision(ctx caddy.Context) error {
 //	    api_url <api_url>
 //	    email_address <email_address>
 //	    password <password>
+//	    totp_secret <totp_secret>
 //	}
 func (p *Provider) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 	for d.Next() {
@@ -76,6 +78,17 @@ func (p *Provider) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 				if d.NextArg() {
 					return d.ArgErr()
 				}
+                        case "totp_secret":
+                                if p.Provider.TOTPSecret != "" {
+                                        return d.Err("TOTP secret already set")
+                                }
+                                if !d.NextArg() {
+                                        return d.ArgErr()
+                                }
+                                p.Provider.TOTPSecret = d.Val()
+                                if d.NextArg() {
+                                        return d.ArgErr()
+                                }
 			default:
 				return d.Errf("unrecognized subdirective '%s'", d.Val())
 			}
