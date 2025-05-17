@@ -3,8 +3,6 @@
 
 This package contains a DNS provider module for [Caddy](https://github.com/caddyserver/caddy). It can be used to manage DNS records with [Mail-In-A-Box](https://mailinabox.email/).
 
-**NOTE:** This module only supports the one zone that the admin custom dns api is hosted on.
-
 ## Caddy Mail-In-A-Box
 
 ```
@@ -22,14 +20,17 @@ To use this module for the ACME DNS challenge, [configure the ACME issuer in you
 		"dns": {
 			"provider": {
 				"name": "mailinabox",
-				"api_url": "https://[your main-in-a-box domain name]/admin/dns/custom"
+				"api_url": "https://[your main-in-a-box domain name]/admin"
                 "email_address": "{$MIAB_EMAIL}"
                 "password": "{$MIAB_PASS}"
+                "totp_secret": "{TOTP_SECRET}" 
 			}
 		}
 	}
 }
 ```
+
+Note that the TOTP secret only has to be provided if you have enabled multi factor authentication on the admin account you're using to access the dns api. 
 
 or with the Caddyfile:
 
@@ -37,9 +38,10 @@ or with the Caddyfile:
 # globally
 {
 	acme_dns mailinabox {
-        api_url https://[your main-in-a-box domain name]/admin/dns/custom
+        api_url https://[your main-in-a-box domain name]/admin
         email_address {$MIAB_EMAIL}
         password {$MIAB_PASS}
+        totp_secret {$TOTP_SECRET} 
     }
 }
 ```
@@ -49,9 +51,10 @@ or with the Caddyfile:
 *.[your-root-domain] {
 	tls {
 		dns mailinabox {
-			api_url https://[your box domain name]/admin/dns/custom
+			api_url https://[your box domain name]/admin
 			email_address {$MIAB_EMAIL}
 			password {$MIAB_PASS}
+                        totp_secret        {$TOTP_SECRET} 
 		}
 	}
 
