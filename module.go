@@ -78,17 +78,17 @@ func (p *Provider) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
 				if d.NextArg() {
 					return d.ArgErr()
 				}
-                        case "totp_secret":
-                                if p.Provider.TOTPSecret != "" {
-                                        return d.Err("TOTP secret already set")
-                                }
-                                if !d.NextArg() {
-                                        return d.ArgErr()
-                                }
-                                p.Provider.TOTPSecret = d.Val()
-                                if d.NextArg() {
-                                        return d.ArgErr()
-                                }
+			case "totp_secret":
+				if p.Provider.TOTPSecret != "" {
+					return d.Err("TOTP secret already set")
+				}
+				if !d.NextArg() {
+					return d.ArgErr()
+				}
+				p.Provider.TOTPSecret = d.Val()
+				if d.NextArg() {
+					return d.ArgErr()
+				}
 			default:
 				return d.Errf("unrecognized subdirective '%s'", d.Val())
 			}
